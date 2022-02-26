@@ -8,23 +8,19 @@ import java.util.List;
 
 public class Main {
     public static void main(String[] args) {
-        List<String> players;
-        List<String> results;
-        int heightOfLadder;
-        String player="";
-
-        //Input 수정해서 Ladder로 넘겨버리자(코드 간결성)
-        players = Arrays.asList(Input.getPlayer());
-        results = Arrays.asList(Input.getResult());
-        heightOfLadder = Input.getNumber();
+        List<String> players = Arrays.asList(Input.getPlayer());
+        List<String> results = Arrays.asList(Input.getResult());
+        int heightOfLadder = Input.getNumber();
 
         Ladder ladder = new Ladder(players, results, heightOfLadder);
         Output.messageAboutLadder(ladder);
         Game game = new Game(ladder);
+
+        String player="";
         while(!player.equals("춘식이")){
             player = Input.pickPlayer();
             Output.messageAboutGame(game.play(player));
         }
-        Input.Close();
+        Input.close();
     }
 }

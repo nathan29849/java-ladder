@@ -11,7 +11,7 @@ public class Input {
         return sc.nextInt();
     }
 
-    public static void Close() {
+    public static void close() {
         sc.close();
     }
 
