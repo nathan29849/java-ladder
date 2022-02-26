@@ -7,6 +7,8 @@ import java.util.Arrays;
 import java.util.List;
 
 public class Main {
+    private static final String TERMINATE = "춘식이";
+
     public static void main(String[] args) {
         List<String> players = Arrays.asList(Input.getPlayer());
         List<String> results = Arrays.asList(Input.getResult());
@@ -16,8 +18,8 @@ public class Main {
         Output.messageAboutLadder(ladder);
         Game game = new Game(ladder);
 
-        String player="";
-        while(!player.equals("춘식이")){
+        String player = "";
+        while (!player.equals(TERMINATE)) {
             player = Input.pickPlayer();
             Output.messageAboutGame(game.play(player));
         }

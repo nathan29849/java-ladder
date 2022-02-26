@@ -8,7 +8,7 @@ public class Input {
 
     public static int getNumber() {
         System.out.println("최대 사다리 높이는 몇 개 인가요?");
-        return sc.nextInt();
+        return Integer.parseInt(sc.nextLine());
     }
 
     public static void close() {
@@ -26,7 +26,6 @@ public class Input {
     }
 
     public static String pickPlayer() {
-        sc = new Scanner(System.in);
         System.out.println("\n결과를 보고 싶은 사람은?");
         return sc.nextLine();
     }

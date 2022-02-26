@@ -28,12 +28,10 @@ public class Ladder {
         return ladder;
     }
     public List<Line> getLadderInfo() {
-        // deep copy
         return new ArrayList<>(lineLadder);
     }
 
     public List<String> getPlayersInfo() {
-        // deep copy
         return new ArrayList<>(players);
     }
 

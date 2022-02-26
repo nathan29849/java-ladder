@@ -8,9 +8,6 @@ public class Game {
     private List<Line> ladder;
     private List<String> players;
     private List<String> results;
-    private GamePlayResults gamePlayResults;
-    private int nowPlayerIndex;
-    private int result;
 
     public Game(Ladder ladder){
         this.ladder = ladder.getLadderInfo();
@@ -19,40 +16,36 @@ public class Game {
     }
 
     public String play(String player){
-        getAllPlayersResults();
-        return gamePlayResults.get(player);
+        return getAllPlayersResults().get(player);
     }
 
-    private void getAllPlayersResults(){
+    private GamePlayResults getAllPlayersResults(){
         Map<String, String> gameResults = new HashMap<>();
         for (int i = 0; i < players.size(); i++) {
-            nowPlayerIndex = i;
-            gameResults.put(players.get(nowPlayerIndex), getOnePlayerResult());
+            gameResults.put(players.get(i), getOnePlayerResult(i));
         }
-        gamePlayResults = new GamePlayResults(gameResults);
+        return new GamePlayResults(gameResults);
     }
 
-    private String getOnePlayerResult() {
-        result = stepDown();
-        return results.get(result);
+    private String getOnePlayerResult(int nowPlayerIndex) {
+        return results.get(stepDown(nowPlayerIndex));
     }
 
-    private int stepDown(){
+    private int stepDown(int nowPlayerIndex){
         for (int i = 0; i < ladder.size(); i++) {
-            rowCheck(nowPlayerIndex, i);
+            nowPlayerIndex = rowCheck(nowPlayerIndex, i);
         }
         return nowPlayerIndex;
     }
 
-    private void rowCheck(int playerIndex, int step){
+    private int rowCheck(int playerIndex, int step){
         if(leftSideCheck(playerIndex, step)){
-            resetPlayerIndexByLeftSide(playerIndex, step);
-            return;
+            return resetPlayerIndexByLeftSide(playerIndex, step);
         }
         if(rightSideCheck(playerIndex, step)){
-            resetPlayerIndexByRightSide(playerIndex, step);
-            return;
+            return resetPlayerIndexByRightSide(playerIndex, step);
         }
+        return playerIndex;
     }
 
     private boolean leftSideCheck(int playerIndex, int step){
@@ -64,30 +57,30 @@ public class Game {
     }
 
     private boolean rightSideCheck(int playerIndex, int step){
-        int i = playerIndex+1;
-        while(i <= ladder.get(step).size() && isLine(i, step)){ // 맨 오른쪽 인덱스를 제외하고, 라인이 있는지 확인
-            i++;
+        int index = playerIndex+1;
+        while(index <= ladder.get(step).size() && isLine(index, step)){ // 맨 오른쪽 인덱스를 제외하고, 라인이 있는지 확인
+            index++;
         }
-        return (i!=playerIndex+1);
+        return (index !=playerIndex+1);
     }
 
     private boolean isLine(int index, int step){
         return ladder.get(step).get(index-1);
     }
 
-    private void resetPlayerIndexByLeftSide(int playerIndex, int step){
-        int i = playerIndex;
-        while(i > 0 && isLine(i, step)){
-            i--;
+    private int resetPlayerIndexByLeftSide(int playerIndex, int step){
+        int index = playerIndex;
+        while(index > 0 && isLine(index, step)){
+            index--;
         }
-        nowPlayerIndex = i;
+        return index;
     }
 
-    private void resetPlayerIndexByRightSide(int playerIndex, int step){
-        int i = playerIndex+1;
-        while(i <= ladder.get(step).size() && isLine(i, step)){
-            i++;
+    private int resetPlayerIndexByRightSide(int playerIndex, int step){
+        int index = playerIndex+1;
+        while(index <= ladder.get(step).size() && isLine(index, step)){
+            index++;
         }
-        nowPlayerIndex = i-1;
+        return index-1;
     }
 }

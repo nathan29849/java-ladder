@@ -10,17 +10,17 @@ public class GamePlayResults {
         this.gamePlayResults = gamePlayResults;
     }
 
-    public String get(String player) {
-        if (player.equals(TERMINATE)) {
+    public String get(String inputValue) {
+        if (inputValue.equals(TERMINATE)) {
             return TERMINATE;
         }
 
-        if(player.equals("all")){
+        if(inputValue.equals("all")){
             return getAllResults();
         }
 
-        if (gamePlayResults.containsKey(player)){
-            return gamePlayResults.get(player);
+        if (gamePlayResults.containsKey(inputValue)){
+            return gamePlayResults.get(inputValue);
         }
         return "찾는 플레이어가 없습니다.";
     }
